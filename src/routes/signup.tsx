@@ -5,12 +5,11 @@ import { z } from "zod";
 import { useApp } from "@/lib/store";
 import { COLLEGES } from "@/lib/data";
 import { useStoreHydrated } from "@/lib/hydration";
-import { AuthLayout } from "@/components/cg/auth-layout";
+import { AuthLayout, GoogleIcon } from "@/components/cg/auth-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { GoogleIcon } from "./login";
 
 export const Route = createFileRoute("/signup")({
   head: () => ({
