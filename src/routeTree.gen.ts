@@ -10,33 +10,455 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as VerifyCollegeRouteImport } from './routes/verify-college'
+import { Route as ShellCareerPeersRouteImport } from './routes/_shell.career-peers'
+import { Route as ShellCodingPartnersRouteImport } from './routes/_shell.coding-partners'
+import { Route as ShellConnectionsRouteImport } from './routes/_shell.connections'
+import { Route as ShellFriendsRouteImport } from './routes/_shell.friends'
+import { Route as ShellHackathonTeamsRouteImport } from './routes/_shell.hackathon-teams'
+import { Route as ShellHomeRouteImport } from './routes/_shell.home'
+import { Route as ShellMentorsRouteImport } from './routes/_shell.mentors'
+import { Route as ShellMessagesRouteImport } from './routes/_shell.messages'
+import { Route as ShellNotificationsRouteImport } from './routes/_shell.notifications'
+import { Route as ShellResearchPartnersRouteImport } from './routes/_shell.research-partners'
+import { Route as ShellSavedRouteImport } from './routes/_shell.saved'
+import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
+import { Route as ShellStudyPartnersRouteImport } from './routes/_shell.study-partners'
+import { Route as ShellEventsIndexRouteImport } from './routes/_shell.events.index'
+import { Route as ShellEventsIdRouteImport } from './routes/_shell.events.$id'
+import { Route as ShellMessagesIndexRouteImport } from './routes/_shell.messages.index'
+import { Route as ShellMessagesIdRouteImport } from './routes/_shell.messages.$id'
+import { Route as ShellPeopleIndexRouteImport } from './routes/_shell.people.index'
+import { Route as ShellPeopleIdRouteImport } from './routes/_shell.people.$id'
+import { Route as ShellProfileIndexRouteImport } from './routes/_shell.profile.index'
+import { Route as ShellProfileEditRouteImport } from './routes/_shell.profile.edit'
+import { Route as ShellProjectsIndexRouteImport } from './routes/_shell.projects.index'
+import { Route as ShellProjectsIdRouteImport } from './routes/_shell.projects.$id'
+import { Route as ShellSettingsIndexRouteImport } from './routes/_shell.settings.index'
+import { Route as ShellSettingsAccountRouteImport } from './routes/_shell.settings.account'
+import { Route as ShellSettingsIntegrationsRouteImport } from './routes/_shell.settings.integrations'
+import { Route as ShellSettingsNotificationsRouteImport } from './routes/_shell.settings.notifications'
+import { Route as ShellSettingsPrivacyRouteImport } from './routes/_shell.settings.privacy'
+import { Route as ShellTeamsIndexRouteImport } from './routes/_shell.teams.index'
+import { Route as ShellTeamsIdRouteImport } from './routes/_shell.teams.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifyCollegeRoute = VerifyCollegeRouteImport.update({
+  id: '/verify-college',
+  path: '/verify-college',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShellCareerPeersRoute = ShellCareerPeersRouteImport.update({
+  id: '/career-peers',
+  path: '/career-peers',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellCodingPartnersRoute = ShellCodingPartnersRouteImport.update({
+  id: '/coding-partners',
+  path: '/coding-partners',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellConnectionsRoute = ShellConnectionsRouteImport.update({
+  id: '/connections',
+  path: '/connections',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellFriendsRoute = ShellFriendsRouteImport.update({
+  id: '/friends',
+  path: '/friends',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellHackathonTeamsRoute = ShellHackathonTeamsRouteImport.update({
+  id: '/hackathon-teams',
+  path: '/hackathon-teams',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellHomeRoute = ShellHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellMentorsRoute = ShellMentorsRouteImport.update({
+  id: '/mentors',
+  path: '/mentors',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellMessagesRoute = ShellMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellNotificationsRoute = ShellNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellResearchPartnersRoute = ShellResearchPartnersRouteImport.update({
+  id: '/research-partners',
+  path: '/research-partners',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSavedRoute = ShellSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellStudyPartnersRoute = ShellStudyPartnersRouteImport.update({
+  id: '/study-partners',
+  path: '/study-partners',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellEventsIndexRoute = ShellEventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellEventsIdRoute = ShellEventsIdRouteImport.update({
+  id: '/events/$id',
+  path: '/events/$id',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellMessagesIndexRoute = ShellMessagesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ShellMessagesRoute,
+} as any)
+const ShellMessagesIdRoute = ShellMessagesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ShellMessagesRoute,
+} as any)
+const ShellPeopleIndexRoute = ShellPeopleIndexRouteImport.update({
+  id: '/people/',
+  path: '/people/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellPeopleIdRoute = ShellPeopleIdRouteImport.update({
+  id: '/people/$id',
+  path: '/people/$id',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellProfileIndexRoute = ShellProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellProfileEditRoute = ShellProfileEditRouteImport.update({
+  id: '/profile/edit',
+  path: '/profile/edit',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellProjectsIndexRoute = ShellProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellProjectsIdRoute = ShellProjectsIdRouteImport.update({
+  id: '/projects/$id',
+  path: '/projects/$id',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSettingsIndexRoute = ShellSettingsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ShellSettingsRoute,
+} as any)
+const ShellSettingsAccountRoute = ShellSettingsAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => ShellSettingsRoute,
+} as any)
+const ShellSettingsIntegrationsRoute =
+  ShellSettingsIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => ShellSettingsRoute,
+  } as any)
+const ShellSettingsNotificationsRoute =
+  ShellSettingsNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => ShellSettingsRoute,
+  } as any)
+const ShellSettingsPrivacyRoute = ShellSettingsPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => ShellSettingsRoute,
+} as any)
+const ShellTeamsIndexRoute = ShellTeamsIndexRouteImport.update({
+  id: '/teams/',
+  path: '/teams/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellTeamsIdRoute = ShellTeamsIdRouteImport.update({
+  id: '/teams/$id',
+  path: '/teams/$id',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/signup': typeof SignupRoute
+  '/verify-college': typeof VerifyCollegeRoute
+  '/career-peers': typeof ShellCareerPeersRoute
+  '/coding-partners': typeof ShellCodingPartnersRoute
+  '/connections': typeof ShellConnectionsRoute
+  '/friends': typeof ShellFriendsRoute
+  '/hackathon-teams': typeof ShellHackathonTeamsRoute
+  '/home': typeof ShellHomeRoute
+  '/mentors': typeof ShellMentorsRoute
+  '/messages': typeof ShellMessagesRouteWithChildren
+  '/notifications': typeof ShellNotificationsRoute
+  '/research-partners': typeof ShellResearchPartnersRoute
+  '/saved': typeof ShellSavedRoute
+  '/settings': typeof ShellSettingsRouteWithChildren
+  '/study-partners': typeof ShellStudyPartnersRoute
+  '/events/$id': typeof ShellEventsIdRoute
+  '/messages/$id': typeof ShellMessagesIdRoute
+  '/people/$id': typeof ShellPeopleIdRoute
+  '/profile/edit': typeof ShellProfileEditRoute
+  '/projects/$id': typeof ShellProjectsIdRoute
+  '/settings/account': typeof ShellSettingsAccountRoute
+  '/settings/integrations': typeof ShellSettingsIntegrationsRoute
+  '/settings/notifications': typeof ShellSettingsNotificationsRoute
+  '/settings/privacy': typeof ShellSettingsPrivacyRoute
+  '/teams/$id': typeof ShellTeamsIdRoute
+  '/events/': typeof ShellEventsIndexRoute
+  '/messages/': typeof ShellMessagesIndexRoute
+  '/people/': typeof ShellPeopleIndexRoute
+  '/profile/': typeof ShellProfileIndexRoute
+  '/projects/': typeof ShellProjectsIndexRoute
+  '/settings/': typeof ShellSettingsIndexRoute
+  '/teams/': typeof ShellTeamsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/signup': typeof SignupRoute
+  '/verify-college': typeof VerifyCollegeRoute
+  '/career-peers': typeof ShellCareerPeersRoute
+  '/coding-partners': typeof ShellCodingPartnersRoute
+  '/connections': typeof ShellConnectionsRoute
+  '/friends': typeof ShellFriendsRoute
+  '/hackathon-teams': typeof ShellHackathonTeamsRoute
+  '/home': typeof ShellHomeRoute
+  '/mentors': typeof ShellMentorsRoute
+  '/notifications': typeof ShellNotificationsRoute
+  '/research-partners': typeof ShellResearchPartnersRoute
+  '/saved': typeof ShellSavedRoute
+  '/study-partners': typeof ShellStudyPartnersRoute
+  '/events/$id': typeof ShellEventsIdRoute
+  '/messages/$id': typeof ShellMessagesIdRoute
+  '/people/$id': typeof ShellPeopleIdRoute
+  '/profile/edit': typeof ShellProfileEditRoute
+  '/projects/$id': typeof ShellProjectsIdRoute
+  '/settings/account': typeof ShellSettingsAccountRoute
+  '/settings/integrations': typeof ShellSettingsIntegrationsRoute
+  '/settings/notifications': typeof ShellSettingsNotificationsRoute
+  '/settings/privacy': typeof ShellSettingsPrivacyRoute
+  '/teams/$id': typeof ShellTeamsIdRoute
+  '/events': typeof ShellEventsIndexRoute
+  '/messages': typeof ShellMessagesIndexRoute
+  '/people': typeof ShellPeopleIndexRoute
+  '/profile': typeof ShellProfileIndexRoute
+  '/projects': typeof ShellProjectsIndexRoute
+  '/settings': typeof ShellSettingsIndexRoute
+  '/teams': typeof ShellTeamsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_shell': typeof ShellRouteWithChildren
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/signup': typeof SignupRoute
+  '/verify-college': typeof VerifyCollegeRoute
+  '/_shell/career-peers': typeof ShellCareerPeersRoute
+  '/_shell/coding-partners': typeof ShellCodingPartnersRoute
+  '/_shell/connections': typeof ShellConnectionsRoute
+  '/_shell/friends': typeof ShellFriendsRoute
+  '/_shell/hackathon-teams': typeof ShellHackathonTeamsRoute
+  '/_shell/home': typeof ShellHomeRoute
+  '/_shell/mentors': typeof ShellMentorsRoute
+  '/_shell/messages': typeof ShellMessagesRouteWithChildren
+  '/_shell/notifications': typeof ShellNotificationsRoute
+  '/_shell/research-partners': typeof ShellResearchPartnersRoute
+  '/_shell/saved': typeof ShellSavedRoute
+  '/_shell/settings': typeof ShellSettingsRouteWithChildren
+  '/_shell/study-partners': typeof ShellStudyPartnersRoute
+  '/_shell/events/$id': typeof ShellEventsIdRoute
+  '/_shell/messages/$id': typeof ShellMessagesIdRoute
+  '/_shell/people/$id': typeof ShellPeopleIdRoute
+  '/_shell/profile/edit': typeof ShellProfileEditRoute
+  '/_shell/projects/$id': typeof ShellProjectsIdRoute
+  '/_shell/settings/account': typeof ShellSettingsAccountRoute
+  '/_shell/settings/integrations': typeof ShellSettingsIntegrationsRoute
+  '/_shell/settings/notifications': typeof ShellSettingsNotificationsRoute
+  '/_shell/settings/privacy': typeof ShellSettingsPrivacyRoute
+  '/_shell/teams/$id': typeof ShellTeamsIdRoute
+  '/_shell/events/': typeof ShellEventsIndexRoute
+  '/_shell/messages/': typeof ShellMessagesIndexRoute
+  '/_shell/people/': typeof ShellPeopleIndexRoute
+  '/_shell/profile/': typeof ShellProfileIndexRoute
+  '/_shell/projects/': typeof ShellProjectsIndexRoute
+  '/_shell/settings/': typeof ShellSettingsIndexRoute
+  '/_shell/teams/': typeof ShellTeamsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/verify-college'
+    | '/career-peers'
+    | '/coding-partners'
+    | '/connections'
+    | '/friends'
+    | '/hackathon-teams'
+    | '/home'
+    | '/mentors'
+    | '/messages'
+    | '/notifications'
+    | '/research-partners'
+    | '/saved'
+    | '/settings'
+    | '/study-partners'
+    | '/events/$id'
+    | '/messages/$id'
+    | '/people/$id'
+    | '/profile/edit'
+    | '/projects/$id'
+    | '/settings/account'
+    | '/settings/integrations'
+    | '/settings/notifications'
+    | '/settings/privacy'
+    | '/teams/$id'
+    | '/events/'
+    | '/messages/'
+    | '/people/'
+    | '/profile/'
+    | '/projects/'
+    | '/settings/'
+    | '/teams/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/verify-college'
+    | '/career-peers'
+    | '/coding-partners'
+    | '/connections'
+    | '/friends'
+    | '/hackathon-teams'
+    | '/home'
+    | '/mentors'
+    | '/notifications'
+    | '/research-partners'
+    | '/saved'
+    | '/study-partners'
+    | '/events/$id'
+    | '/messages/$id'
+    | '/people/$id'
+    | '/profile/edit'
+    | '/projects/$id'
+    | '/settings/account'
+    | '/settings/integrations'
+    | '/settings/notifications'
+    | '/settings/privacy'
+    | '/teams/$id'
+    | '/events'
+    | '/messages'
+    | '/people'
+    | '/profile'
+    | '/projects'
+    | '/settings'
+    | '/teams'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/verify-college'
+    | '/_shell/career-peers'
+    | '/_shell/coding-partners'
+    | '/_shell/connections'
+    | '/_shell/friends'
+    | '/_shell/hackathon-teams'
+    | '/_shell/home'
+    | '/_shell/mentors'
+    | '/_shell/messages'
+    | '/_shell/notifications'
+    | '/_shell/research-partners'
+    | '/_shell/saved'
+    | '/_shell/settings'
+    | '/_shell/study-partners'
+    | '/_shell/events/$id'
+    | '/_shell/messages/$id'
+    | '/_shell/people/$id'
+    | '/_shell/profile/edit'
+    | '/_shell/projects/$id'
+    | '/_shell/settings/account'
+    | '/_shell/settings/integrations'
+    | '/_shell/settings/notifications'
+    | '/_shell/settings/privacy'
+    | '/_shell/teams/$id'
+    | '/_shell/events/'
+    | '/_shell/messages/'
+    | '/_shell/people/'
+    | '/_shell/profile/'
+    | '/_shell/projects/'
+    | '/_shell/settings/'
+    | '/_shell/teams/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShellRoute: typeof ShellRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
+  SignupRoute: typeof SignupRoute
+  VerifyCollegeRoute: typeof VerifyCollegeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +470,349 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify-college': {
+      id: '/verify-college'
+      path: '/verify-college'
+      fullPath: '/verify-college'
+      preLoaderRoute: typeof VerifyCollegeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shell/career-peers': {
+      id: '/_shell/career-peers'
+      path: '/career-peers'
+      fullPath: '/career-peers'
+      preLoaderRoute: typeof ShellCareerPeersRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/coding-partners': {
+      id: '/_shell/coding-partners'
+      path: '/coding-partners'
+      fullPath: '/coding-partners'
+      preLoaderRoute: typeof ShellCodingPartnersRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/connections': {
+      id: '/_shell/connections'
+      path: '/connections'
+      fullPath: '/connections'
+      preLoaderRoute: typeof ShellConnectionsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/friends': {
+      id: '/_shell/friends'
+      path: '/friends'
+      fullPath: '/friends'
+      preLoaderRoute: typeof ShellFriendsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/hackathon-teams': {
+      id: '/_shell/hackathon-teams'
+      path: '/hackathon-teams'
+      fullPath: '/hackathon-teams'
+      preLoaderRoute: typeof ShellHackathonTeamsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/home': {
+      id: '/_shell/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof ShellHomeRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/mentors': {
+      id: '/_shell/mentors'
+      path: '/mentors'
+      fullPath: '/mentors'
+      preLoaderRoute: typeof ShellMentorsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/messages': {
+      id: '/_shell/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof ShellMessagesRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/notifications': {
+      id: '/_shell/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof ShellNotificationsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/research-partners': {
+      id: '/_shell/research-partners'
+      path: '/research-partners'
+      fullPath: '/research-partners'
+      preLoaderRoute: typeof ShellResearchPartnersRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/saved': {
+      id: '/_shell/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof ShellSavedRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/study-partners': {
+      id: '/_shell/study-partners'
+      path: '/study-partners'
+      fullPath: '/study-partners'
+      preLoaderRoute: typeof ShellStudyPartnersRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/events/': {
+      id: '/_shell/events/'
+      path: '/events'
+      fullPath: '/events/'
+      preLoaderRoute: typeof ShellEventsIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/events/$id': {
+      id: '/_shell/events/$id'
+      path: '/events/$id'
+      fullPath: '/events/$id'
+      preLoaderRoute: typeof ShellEventsIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/messages/': {
+      id: '/_shell/messages/'
+      path: '/'
+      fullPath: '/messages/'
+      preLoaderRoute: typeof ShellMessagesIndexRouteImport
+      parentRoute: typeof ShellMessagesRoute
+    }
+    '/_shell/messages/$id': {
+      id: '/_shell/messages/$id'
+      path: '/$id'
+      fullPath: '/messages/$id'
+      preLoaderRoute: typeof ShellMessagesIdRouteImport
+      parentRoute: typeof ShellMessagesRoute
+    }
+    '/_shell/people/': {
+      id: '/_shell/people/'
+      path: '/people'
+      fullPath: '/people/'
+      preLoaderRoute: typeof ShellPeopleIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/people/$id': {
+      id: '/_shell/people/$id'
+      path: '/people/$id'
+      fullPath: '/people/$id'
+      preLoaderRoute: typeof ShellPeopleIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/profile/': {
+      id: '/_shell/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof ShellProfileIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/profile/edit': {
+      id: '/_shell/profile/edit'
+      path: '/profile/edit'
+      fullPath: '/profile/edit'
+      preLoaderRoute: typeof ShellProfileEditRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/projects/': {
+      id: '/_shell/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ShellProjectsIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/projects/$id': {
+      id: '/_shell/projects/$id'
+      path: '/projects/$id'
+      fullPath: '/projects/$id'
+      preLoaderRoute: typeof ShellProjectsIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/settings/': {
+      id: '/_shell/settings/'
+      path: '/'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof ShellSettingsIndexRouteImport
+      parentRoute: typeof ShellSettingsRoute
+    }
+    '/_shell/settings/account': {
+      id: '/_shell/settings/account'
+      path: '/account'
+      fullPath: '/settings/account'
+      preLoaderRoute: typeof ShellSettingsAccountRouteImport
+      parentRoute: typeof ShellSettingsRoute
+    }
+    '/_shell/settings/integrations': {
+      id: '/_shell/settings/integrations'
+      path: '/integrations'
+      fullPath: '/settings/integrations'
+      preLoaderRoute: typeof ShellSettingsIntegrationsRouteImport
+      parentRoute: typeof ShellSettingsRoute
+    }
+    '/_shell/settings/notifications': {
+      id: '/_shell/settings/notifications'
+      path: '/notifications'
+      fullPath: '/settings/notifications'
+      preLoaderRoute: typeof ShellSettingsNotificationsRouteImport
+      parentRoute: typeof ShellSettingsRoute
+    }
+    '/_shell/settings/privacy': {
+      id: '/_shell/settings/privacy'
+      path: '/privacy'
+      fullPath: '/settings/privacy'
+      preLoaderRoute: typeof ShellSettingsPrivacyRouteImport
+      parentRoute: typeof ShellSettingsRoute
+    }
+    '/_shell/teams/': {
+      id: '/_shell/teams/'
+      path: '/teams'
+      fullPath: '/teams/'
+      preLoaderRoute: typeof ShellTeamsIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/teams/$id': {
+      id: '/_shell/teams/$id'
+      path: '/teams/$id'
+      fullPath: '/teams/$id'
+      preLoaderRoute: typeof ShellTeamsIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
+interface ShellMessagesRouteChildren {
+  ShellMessagesIdRoute: typeof ShellMessagesIdRoute
+  ShellMessagesIndexRoute: typeof ShellMessagesIndexRoute
+}
+
+const ShellMessagesRouteChildren: ShellMessagesRouteChildren = {
+  ShellMessagesIdRoute: ShellMessagesIdRoute,
+  ShellMessagesIndexRoute: ShellMessagesIndexRoute,
+}
+
+const ShellMessagesRouteWithChildren = ShellMessagesRoute._addFileChildren(
+  ShellMessagesRouteChildren,
+)
+
+interface ShellSettingsRouteChildren {
+  ShellSettingsAccountRoute: typeof ShellSettingsAccountRoute
+  ShellSettingsIntegrationsRoute: typeof ShellSettingsIntegrationsRoute
+  ShellSettingsNotificationsRoute: typeof ShellSettingsNotificationsRoute
+  ShellSettingsPrivacyRoute: typeof ShellSettingsPrivacyRoute
+  ShellSettingsIndexRoute: typeof ShellSettingsIndexRoute
+}
+
+const ShellSettingsRouteChildren: ShellSettingsRouteChildren = {
+  ShellSettingsAccountRoute: ShellSettingsAccountRoute,
+  ShellSettingsIntegrationsRoute: ShellSettingsIntegrationsRoute,
+  ShellSettingsNotificationsRoute: ShellSettingsNotificationsRoute,
+  ShellSettingsPrivacyRoute: ShellSettingsPrivacyRoute,
+  ShellSettingsIndexRoute: ShellSettingsIndexRoute,
+}
+
+const ShellSettingsRouteWithChildren = ShellSettingsRoute._addFileChildren(
+  ShellSettingsRouteChildren,
+)
+
+interface ShellRouteChildren {
+  ShellCareerPeersRoute: typeof ShellCareerPeersRoute
+  ShellCodingPartnersRoute: typeof ShellCodingPartnersRoute
+  ShellConnectionsRoute: typeof ShellConnectionsRoute
+  ShellFriendsRoute: typeof ShellFriendsRoute
+  ShellHackathonTeamsRoute: typeof ShellHackathonTeamsRoute
+  ShellHomeRoute: typeof ShellHomeRoute
+  ShellMentorsRoute: typeof ShellMentorsRoute
+  ShellMessagesRoute: typeof ShellMessagesRouteWithChildren
+  ShellNotificationsRoute: typeof ShellNotificationsRoute
+  ShellResearchPartnersRoute: typeof ShellResearchPartnersRoute
+  ShellSavedRoute: typeof ShellSavedRoute
+  ShellSettingsRoute: typeof ShellSettingsRouteWithChildren
+  ShellStudyPartnersRoute: typeof ShellStudyPartnersRoute
+  ShellEventsIdRoute: typeof ShellEventsIdRoute
+  ShellPeopleIdRoute: typeof ShellPeopleIdRoute
+  ShellProfileEditRoute: typeof ShellProfileEditRoute
+  ShellProjectsIdRoute: typeof ShellProjectsIdRoute
+  ShellTeamsIdRoute: typeof ShellTeamsIdRoute
+  ShellEventsIndexRoute: typeof ShellEventsIndexRoute
+  ShellPeopleIndexRoute: typeof ShellPeopleIndexRoute
+  ShellProfileIndexRoute: typeof ShellProfileIndexRoute
+  ShellProjectsIndexRoute: typeof ShellProjectsIndexRoute
+  ShellTeamsIndexRoute: typeof ShellTeamsIndexRoute
+}
+
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellCareerPeersRoute: ShellCareerPeersRoute,
+  ShellCodingPartnersRoute: ShellCodingPartnersRoute,
+  ShellConnectionsRoute: ShellConnectionsRoute,
+  ShellFriendsRoute: ShellFriendsRoute,
+  ShellHackathonTeamsRoute: ShellHackathonTeamsRoute,
+  ShellHomeRoute: ShellHomeRoute,
+  ShellMentorsRoute: ShellMentorsRoute,
+  ShellMessagesRoute: ShellMessagesRouteWithChildren,
+  ShellNotificationsRoute: ShellNotificationsRoute,
+  ShellResearchPartnersRoute: ShellResearchPartnersRoute,
+  ShellSavedRoute: ShellSavedRoute,
+  ShellSettingsRoute: ShellSettingsRouteWithChildren,
+  ShellStudyPartnersRoute: ShellStudyPartnersRoute,
+  ShellEventsIdRoute: ShellEventsIdRoute,
+  ShellPeopleIdRoute: ShellPeopleIdRoute,
+  ShellProfileEditRoute: ShellProfileEditRoute,
+  ShellProjectsIdRoute: ShellProjectsIdRoute,
+  ShellTeamsIdRoute: ShellTeamsIdRoute,
+  ShellEventsIndexRoute: ShellEventsIndexRoute,
+  ShellPeopleIndexRoute: ShellPeopleIndexRoute,
+  ShellProfileIndexRoute: ShellProfileIndexRoute,
+  ShellProjectsIndexRoute: ShellProjectsIndexRoute,
+  ShellTeamsIndexRoute: ShellTeamsIndexRoute,
+}
+
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShellRoute: ShellRouteWithChildren,
+  LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
+  SignupRoute: SignupRoute,
+  VerifyCollegeRoute: VerifyCollegeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
