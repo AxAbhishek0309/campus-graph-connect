@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { createWithEqualityFn as create } from "zustand/traditional";
+import { shallow } from "zustand/shallow";
 import { persist } from "zustand/middleware";
 import {
   makeConversations,
@@ -277,7 +278,7 @@ export const useApp = create<AppState>()(
     }),
     { name: "campusgraph-v1", skipHydration: true, version: 1 },
   ),
-);
+), shallow);
 
 export function getPerson(state: AppState, id: string): Student | undefined {
   return id === "me" ? state.me : state.students.find((s) => s.id === id);
