@@ -6,7 +6,7 @@ import { formatEventDate, greeting, matchScore, profileCompletion, timeAgo, year
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { PersonCard, ProjectCard } from "@/components/cg/cards";
-import { PersonLink, Tag, UserAvatar, Verified } from "@/components/cg/primitives";
+import { HrefLink, Tag, UserAvatar, Verified } from "@/components/cg/primitives";
 
 export const Route = createFileRoute("/_shell/home")({
   head: () => ({
@@ -109,7 +109,7 @@ function Home() {
                 {recentNotifs.map((n) => (
                   <li key={n.id} className="flex items-start gap-2.5 text-sm">
                     {!n.read ? <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand" /> : <span className="mt-1.5 size-1.5 shrink-0" />}
-                    <a href={n.href} className="flex-1 leading-snug hover:underline">{n.text}</a>
+                    <HrefLink href={n.href} onClick={() => s.markNotification(n.id)} className="flex-1 leading-snug hover:underline">{n.text}</HrefLink>
                     <span className="shrink-0 text-xs text-muted-foreground">{timeAgo(n.ts)}</span>
                   </li>
                 ))}
@@ -150,7 +150,6 @@ function Home() {
         </div>
         <Button asChild><Link to="/hackathon-teams">Open team builder</Link></Button>
       </section>
-      <span className="hidden"><PersonLink id="me">me</PersonLink></span>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { BadgeCheck, Bookmark, BookmarkCheck, Check, Clock, Copy, Share2, UserPlus, X } from "lucide-react";
@@ -263,5 +263,24 @@ export function AvatarStack({ ids, max = 4, size = 26 }: { ids: string[]; max?: 
       </div>
       {people.length > max && <span className="ml-2 text-xs text-muted-foreground">+{people.length - max}</span>}
     </div>
+  );
+}
+
+/** Link for dynamic, stored hrefs (e.g. notifications). */
+export function HrefLink({ href, children, className, onClick }: { href: string; children: ReactNode; className?: string; onClick?: () => void }) {
+  const router = useRouter();
+  return (
+    <a
+      href={href}
+      className={className}
+      onClick={(e) => {
+        if (e.metaKey || e.ctrlKey) return;
+        e.preventDefault();
+        onClick?.();
+        router.history.push(href);
+      }}
+    >
+      {children}
+    </a>
   );
 }
