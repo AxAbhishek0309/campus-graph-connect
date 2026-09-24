@@ -47,7 +47,7 @@ function useCounts() {
   return { messages, notifications };
 }
 
-function NavLinkItem({ item, onClick }: { item: NavItem; onClick?: () => void }) {
+function NavLinkItem({ item, onClick }: { item: NavItem; onClick?: (() => void) | undefined }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const counts = useCounts();
   const active = path === item.to || path.startsWith(item.to + "/");
@@ -69,7 +69,7 @@ function NavLinkItem({ item, onClick }: { item: NavItem; onClick?: () => void })
   );
 }
 
-function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
+function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   return (
     <div className="flex h-full flex-col">
       <div className="px-4 pt-5 pb-6">
