@@ -6,6 +6,7 @@ import { reasonToConnect, yearLabel } from "@/lib/helpers";
 import { Button } from "@/components/ui/button";
 import { Logo, Tag, UserAvatar } from "@/components/cg/primitives";
 import { cn } from "@/lib/utils";
+import { HeroBackdrop, Magnetic, TiltCard } from "@/components/cg/effects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -137,7 +138,7 @@ function Landing() {
       </header>
 
       <main className="mx-auto max-w-6xl px-5">
-        <section className="pt-16 pb-16 text-center sm:pt-24">
+        <section className="relative isolate pt-16 pb-16 text-center sm:pt-24"><HeroBackdrop />
           <p className="animate-rise font-mono text-[11px] tracking-[0.18em] text-muted-foreground">YOUR COLLEGE IS FULL OF PEOPLE YOU SHOULD KNOW.</p>
           <h1 className="mx-auto mt-6 max-w-4xl animate-rise text-5xl font-semibold leading-[1.02] tracking-[-0.045em] [animation-delay:80ms] sm:text-7xl">
             Find your people<br />to build, learn<br /><span className="text-muted-foreground">and grow together.</span>
@@ -146,12 +147,12 @@ function Landing() {
             CampusGraph helps students discover the right people for coding, projects, research, hackathons, placements and meaningful conversations.
           </p>
           <div className="mt-8 flex animate-rise justify-center gap-3 [animation-delay:240ms]">
-            <Button size="lg" asChild><Link to="/signup">Get Started <ArrowRight className="size-4" /></Link></Button>
+            <Magnetic><Button size="lg" asChild><Link to="/signup">Get Started <ArrowRight className="size-4" /></Link></Button></Magnetic>
             <Button size="lg" variant="outline" asChild><Link to="/people">Explore People</Link></Button>
           </div>
         </section>
 
-        <div className="animate-rise [animation-delay:350ms]"><ProductPreview /></div>
+        <div className="animate-rise [animation-delay:350ms]"><TiltCard intensity={4} className="rounded-2xl"><ProductPreview /></TiltCard></div>
 
         <div className="mt-24">
           <Section n="01" title="Discover people" text="Not a feed of strangers. Every recommendation comes with a plain reason — shared skills, shared goals, same campus — so you know why you should say hi.">
