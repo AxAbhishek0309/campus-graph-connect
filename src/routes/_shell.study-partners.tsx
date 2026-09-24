@@ -7,5 +7,5 @@ export const Route = createFileRoute("/_shell/study-partners")({
 });
 
 function StudyPartners() {
-  return <DiscoverPage category="study" eyebrow="Study Partners" title="Study better, together." description="Classmates and seniors who want accountability for exams, GATE, placements or just the next quiz.", cta: { to: "/events", label: "Study sessions" } />;
+  return <DiscoverPage category="study" eyebrow="Study Partners" title="Study better, together." description="Classmates and seniors who want accountability for exams, GATE, placements or just the next quiz." cta={{ to: "/events", label: "Study sessions" }} />;
 }

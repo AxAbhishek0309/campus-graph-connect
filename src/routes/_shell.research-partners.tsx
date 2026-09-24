@@ -7,5 +7,5 @@ export const Route = createFileRoute("/_shell/research-partners")({
 });
 
 function ResearchPartners() {
-  return <DiscoverPage category="research" eyebrow="Research Partners" title="Find research partners." description="Students reading papers, running experiments and writing them up — across departments.", cta: { to: "/projects", label: "Research projects" } />;
+  return <DiscoverPage category="research" eyebrow="Research Partners" title="Find research partners." description="Students reading papers, running experiments and writing them up — across departments." cta={{ to: "/projects", label: "Research projects" }} />;
 }
