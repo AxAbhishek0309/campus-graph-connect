@@ -278,7 +278,8 @@ export const useApp = create<AppState>()(
     }),
     { name: "campusgraph-v1", skipHydration: true, version: 1 },
   ),
-), shallow);
+  shallow,
+);
 
 export function getPerson(state: AppState, id: string): Student | undefined {
   return id === "me" ? state.me : state.students.find((s) => s.id === id);
