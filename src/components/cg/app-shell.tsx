@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState, type LinkProps } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   Bell, Bookmark, Briefcase, Calendar, Code2, FlaskConical, FolderGit2, GraduationCap, Heart, Home,
@@ -15,7 +15,7 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { CommandSearch } from "./command-search";
 import { Logo, UserAvatar } from "./primitives";
 
-type NavItem = { to: string; label: string; icon: typeof Home; badge?: "messages" | "notifications" };
+type NavItem = { to: NonNullable<LinkProps["to"]>; label: string; icon: typeof Home; badge?: "messages" | "notifications" };
 
 const MAIN: NavItem[] = [
   { to: "/home", label: "Home", icon: Home },
