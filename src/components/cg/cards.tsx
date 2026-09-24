@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
+import { TiltCard } from "./effects";
 import { toast } from "sonner";
 import { Calendar, Check, MapPin, MessageSquare, Users } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
@@ -21,7 +22,7 @@ export function PersonCard({ person, reason }: { person: Student; reason?: strin
   const me = useApp((s) => s.me);
   const message = useMessage();
   return (
-    <article className="group flex flex-col rounded-xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-elevated">
+    <TiltCard className="rounded-xl border bg-card p-5">
       <div className="flex items-start justify-between gap-3">
         <Link to="/people/$id" params={{ id: person.id }} className="flex min-w-0 items-center gap-3">
           <UserAvatar name={person.name} hue={person.hue} size={48} online={person.lastActiveMins < 10} />
@@ -60,7 +61,7 @@ export function PersonCard({ person, reason }: { person: Student; reason?: strin
           <Link to="/people/$id" params={{ id: person.id }}>View</Link>
         </Button>
       </div>
-    </article>
+    </TiltCard>
   );
 }
 
@@ -72,7 +73,7 @@ export function ProjectCard({ project }: { project: Project }) {
   const isOwner = project.ownerId === "me";
   const stageTone = { Idea: "violet", Prototype: "warning", Building: "brand", Launched: "success" } as const;
   return (
-    <article className="group flex flex-col rounded-xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-elevated">
+    <TiltCard className="rounded-xl border bg-card p-5">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <div className="mb-1.5 flex items-center gap-2">
@@ -127,7 +128,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </Button>
         )}
       </div>
-    </article>
+    </TiltCard>
   );
 }
 
@@ -137,7 +138,7 @@ export function TeamCard({ team }: { team: Team }) {
   const joined = team.members.includes("me");
   const full = team.members.length >= team.maxSize;
   return (
-    <article className="group flex flex-col rounded-xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-elevated">
+    <TiltCard className="rounded-xl border bg-card p-5">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <span className="flex size-10 items-center justify-center rounded-lg bg-secondary font-mono text-sm font-semibold">
@@ -177,7 +178,7 @@ export function TeamCard({ team }: { team: Team }) {
           {joined ? <><Check className="size-4" /> Member</> : full ? "Full" : "Join"}
         </Button>
       </div>
-    </article>
+    </TiltCard>
   );
 }
 
@@ -186,7 +187,7 @@ export function EventCard({ event }: { event: EventItem }) {
   const registered = event.attendees.includes("me");
   const d = formatEventDate(event.date);
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-all hover:-translate-y-0.5 hover:shadow-elevated">
+    <TiltCard className="overflow-hidden rounded-xl border bg-card">
       <div className="flex gap-4 p-5">
         <div className="flex w-14 shrink-0 flex-col items-center rounded-lg border py-2">
           <span className="font-mono text-[10px] tracking-widest" style={{ color: `oklch(0.5 0.15 ${event.hue})` }}>{d.month}</span>
@@ -222,7 +223,7 @@ export function EventCard({ event }: { event: EventItem }) {
           {registered ? <><Check className="size-4" /> Registered</> : "Register"}
         </Button>
       </div>
-    </article>
+    </TiltCard>
   );
 }
 
