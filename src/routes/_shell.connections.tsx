@@ -18,9 +18,9 @@ export const Route = createFileRoute("/_shell/connections")({
   validateSearch: (s) => z.object({ tab: z.enum(TABS).optional() }).parse(s),
   head: () => ({
     meta: [
-      { title: "Connections — CampusGraph" },
+      { title: "Connections — Tribe" },
       { name: "description", content: "Manage your connections and pending requests." },
-      { property: "og:title", content: "Connections — CampusGraph" },
+      { property: "og:title", content: "Connections — Tribe" },
       { property: "og:description", content: "Your university network." },
     ],
   }),
@@ -49,7 +49,7 @@ function Connections() {
 
   return (
     <>
-      <PageHeader title="Connections" description="The people you know on CampusGraph." />
+      <PageHeader title="Connections" description="The people you know on Tribe." />
       <div className="mb-4 flex gap-1 border-b" role="tablist">
         {TABS.map((t) => <button key={t} role="tab" aria-selected={tab === t} onClick={() => navigate({ search: { tab: t } })} className={cn("-mb-px border-b-2 px-3 py-2.5 text-sm capitalize", tab === t ? "border-foreground font-medium" : "border-transparent text-muted-foreground hover:text-foreground")}>{t} <span className="ml-1 text-xs text-muted-foreground">{counts[t]}</span></button>)}
       </div>

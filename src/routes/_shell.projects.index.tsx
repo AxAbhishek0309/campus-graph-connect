@@ -16,9 +16,9 @@ export const Route = createFileRoute("/_shell/projects/")({
   validateSearch: (s) => z.object({ new: z.boolean().optional() }).parse(s),
   head: () => ({
     meta: [
-      { title: "Projects — CampusGraph" },
+      { title: "Projects — Tribe" },
       { name: "description", content: "Discover student projects looking for collaborators, or post your own." },
-      { property: "og:title", content: "Build something together — CampusGraph" },
+      { property: "og:title", content: "Build something together — Tribe" },
       { property: "og:description", content: "Student projects with open roles." },
     ],
   }),

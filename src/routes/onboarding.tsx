@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { ArrowLeft, Camera, Check, Loader2 } from "lucide-react";
+import { ArrowLeft, Camera, Check, Loader2, Sparkles } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { BRANCHES, COLLEGES, INTERESTS, LOOKING_FOR, PLATFORMS, SKILLS } from "@/lib/data";
 import { useStoreHydrated } from "@/lib/hydration";
@@ -12,14 +12,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Chip, Logo, UserAvatar } from "@/components/cg/primitives";
 import type { Platform } from "@/lib/types";
+import { fetchPlatformStats } from "@/lib/integrations";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/onboarding")({
   head: () => ({
     meta: [
-      { title: "Set up your profile — CampusGraph" },
-      { name: "description", content: "Tell CampusGraph about your skills, interests and what you're looking for." },
-      { property: "og:title", content: "Set up your profile — CampusGraph" },
+      { title: "Set up your profile — Tribe" },
+      { name: "description", content: "Tell Tribe about your skills, interests and what you're looking for." },
+      { property: "og:title", content: "Set up your profile — Tribe" },
       { property: "og:description", content: "Five quick steps to find your people." },
     ],
   }),
@@ -40,13 +41,14 @@ function Onboarding() {
   const setOnboarding = useApp((s) => s.setOnboarding);
   const integrations = useApp((s) => s.integrations);
   const setIntegration = useApp((s) => s.setIntegration);
+  const connectAll = useApp((s) => s.connectAllIntegrations);
   const navigate = useNavigate();
   const [connecting, setConnecting] = useState<string | null>(null);
 
   const go = (n: number) => setOnboarding({ step: Math.max(0, Math.min(STEPS.length - 1, n)) });
   const finish = () => {
     setOnboarding({ done: true, step: 0 });
-    toast.success("Profile saved. Welcome to CampusGraph.");
+    toast.success("Profile saved. Welcome to Tribe.");
     navigate({ to: "/home" });
   };
 
@@ -124,8 +126,24 @@ function Onboarding() {
           )}
           {step === 4 && (
             <>
-              <h1 className="text-4xl font-semibold tracking-[-0.035em]">Connect your platforms.</h1>
-              <p className="mt-2 text-muted-foreground">Optional. Your real activity helps others know what you work on.</p>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h1 className="text-4xl font-semibold tracking-[-0.035em]">Connect your platforms.</h1>
+                  <p className="mt-2 text-muted-foreground">Optional. Link LeetCode, GitHub, Codeforces & more to showcase real work.</p>
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    connectAll();
+                    toast.success("All 6 platforms connected!");
+                  }}
+                  className="gap-1.5 self-start sm:self-auto"
+                >
+                  <Sparkles className="size-4" />
+                  Connect All
+                </Button>
+              </div>
               <div className="mt-10 divide-y rounded-xl border bg-card">
                 {PLATFORMS.map((p) => {
                   const st = integrations[p as Platform];
@@ -136,10 +154,14 @@ function Onboarding() {
                         <p className="text-sm text-muted-foreground">{st.status === "connected" ? `Connected as ${st.handle}` : "Not connected"}</p>
                       </div>
                       <Button size="sm" variant={st.status === "connected" ? "outline" : "default"} disabled={connecting === p}
-                        onClick={() => {
+                        onClick={async () => {
                           if (st.status === "connected") return setIntegration(p as Platform, { status: "disconnected" });
                           setConnecting(p);
-                          setTimeout(() => { setIntegration(p as Platform, { status: "connected", handle: me.name.split(" ")[0].toLowerCase(), lastSync: Date.now() }); setConnecting(null); toast.success(`${p} connected.`); }, 900);
+                          const handleInput = me.name.split(" ")[0].toLowerCase() + (p === "LeetCode" ? "_t" : p === "Codeforces" ? "_coder" : "");
+                          const { handle, stats } = await fetchPlatformStats(p as Platform, handleInput);
+                          setIntegration(p as Platform, { status: "connected", handle, lastSync: Date.now(), stats });
+                          setConnecting(null);
+                          toast.success(`${p} connected.`);
                         }}>
                         {connecting === p ? <Loader2 className="size-4 animate-spin" /> : st.status === "connected" ? <><Check className="size-4" /> Connected</> : "Connect"}
                       </Button>

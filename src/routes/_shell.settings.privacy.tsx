@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_shell/settings/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy settings — CampusGraph" },
+      { title: "Privacy settings — Tribe" },
       { name: "description", content: "Control who sees your profile, stats and online status." },
-      { property: "og:title", content: "Privacy settings — CampusGraph" },
+      { property: "og:title", content: "Privacy settings — Tribe" },
       { property: "og:description", content: "Control your visibility." },
     ],
   }),

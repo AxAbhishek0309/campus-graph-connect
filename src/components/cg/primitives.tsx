@@ -19,7 +19,7 @@ export function Logo({ className, withText = true }: { className?: string; withT
         <circle cx="14" cy="19" r="2.6" className="fill-brand" />
         <path d="M9 9 L19 9 M9 9 L14 19 M19 9 L14 19" className="stroke-background" strokeWidth="1.4" fill="none" opacity="0.7" />
       </svg>
-      {withText && <span className="text-[15px] font-semibold tracking-tight">CampusGraph</span>}
+      {withText && <span className="text-[15px] font-semibold tracking-tight">Tribe</span>}
     </span>
   );
 }
@@ -168,7 +168,7 @@ export function ShareButton({ path, title, label = false, variant = "ghost" }: {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Share {title}</DialogTitle>
-            <DialogDescription>Anyone with a CampusGraph account can open this link.</DialogDescription>
+            <DialogDescription>Anyone with a Tribe account can open this link.</DialogDescription>
           </DialogHeader>
           <div className="flex gap-2">
             <Input readOnly value={url} aria-label="Link" onFocus={(e) => e.target.select()} />

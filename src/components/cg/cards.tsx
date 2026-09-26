@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { TiltCard } from "./effects";
 import { toast } from "sonner";
-import { Calendar, Check, MapPin, MessageSquare, Users } from "lucide-react";
+import { Calendar, Check, Clock, ExternalLink, GraduationCap, MapPin, MessageSquare, Sparkles, Trophy, Users } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { useApp } from "@/lib/store";
 import { formatEventDate, reasonToConnect, yearLabel } from "@/lib/helpers";
+import { cn } from "@/lib/utils";
+import { getPlatformMeta } from "@/lib/openrouter-events";
 import type { EventItem, Project, Student, Team } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { AvatarStack, ConnectButton, SaveButton, Tag, UserAvatar, Verified } from "./primitives";
@@ -186,41 +188,94 @@ export function EventCard({ event }: { event: EventItem }) {
   const toggle = useApp((s) => s.toggleRegister);
   const registered = event.attendees.includes("me");
   const d = formatEventDate(event.date);
+  const platformMeta = getPlatformMeta(event.sourcePlatform);
+  const externalApplyUrl = event.link || event.sourceUrl;
+
   return (
-    <TiltCard className="overflow-hidden rounded-xl border bg-card">
+    <TiltCard className="flex flex-col overflow-hidden rounded-xl border bg-card transition-all hover:shadow-md">
       <div className="flex gap-4 p-5">
-        <div className="flex w-14 shrink-0 flex-col items-center rounded-lg border py-2">
-          <span className="font-mono text-[10px] tracking-widest" style={{ color: `oklch(0.5 0.15 ${event.hue})` }}>{d.month}</span>
-          <span className="text-2xl font-semibold tracking-tight">{d.day}</span>
+        <div className="flex w-14 shrink-0 flex-col items-center rounded-lg border py-2 bg-muted/20">
+          <span className="font-mono text-[10px] tracking-widest uppercase font-semibold" style={{ color: `oklch(0.5 0.15 ${event.hue})` }}>{d.month}</span>
+          <span className="text-2xl font-bold tracking-tight">{d.day}</span>
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <p className="text-xs text-muted-foreground">{event.category} · {event.organizer}</p>
-              <Link to="/events/$id" params={{ id: event.id }}>
-                <h3 className="mt-0.5 font-semibold tracking-tight group-hover:underline">{event.title}</h3>
-              </Link>
+          {/* Platform and category badges */}
+          <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+            {event.sourcePlatform && event.sourcePlatform !== "Campus" && (
+              <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border", platformMeta.badgeClass)}>
+                <span>via {platformMeta.displayName}</span>
+              </span>
+            )}
+            {event.isFlagship && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                <Sparkles className="size-2.5" /> Flagship
+              </span>
+            )}
+            {event.mode && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded border text-muted-foreground bg-background">
+                {event.mode}
+              </span>
+            )}
+            <div className="ml-auto">
+              <SaveButton kind="events" id={event.id} />
             </div>
-            <SaveButton kind="events" id={event.id} />
           </div>
-          <div className="mt-2 space-y-1 text-sm text-muted-foreground">
-            <p className="flex items-center gap-1.5"><Calendar className="size-3.5" />{d.weekday}, {event.time}</p>
-            <p className="flex items-center gap-1.5"><MapPin className="size-3.5" /><span className="truncate">{event.location}</span></p>
-            <p className="flex items-center gap-1.5"><Users className="size-3.5" />{event.attendees.length} going</p>
+
+          <p className="text-xs text-muted-foreground">{event.category} · {event.organizer}</p>
+          <Link to="/events/$id" params={{ id: event.id }}>
+            <h3 className="mt-1 font-semibold tracking-tight text-foreground group-hover:underline line-clamp-1">{event.title}</h3>
+          </Link>
+
+          <div className="mt-2.5 space-y-1 text-sm text-muted-foreground">
+            {event.prize && (
+              <p className="flex items-center gap-1.5 font-semibold text-xs text-amber-600 dark:text-amber-400">
+                <Trophy className="size-3.5 shrink-0" />
+                <span className="truncate">{event.prize}</span>
+              </p>
+            )}
+            {event.eligibility && (
+              <p className="flex items-center gap-1.5 text-xs text-muted-foreground/90">
+                <GraduationCap className="size-3.5 shrink-0 text-primary" />
+                <span className="truncate" title={event.eligibility}>{event.eligibility}</span>
+              </p>
+            )}
+            {event.deadline && (
+              <p className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 font-medium">
+                <Clock className="size-3.5 shrink-0" />
+                <span className="truncate">{event.deadline}</span>
+              </p>
+            )}
+            {event.externalRegistrations && (
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                <span className="truncate">{event.externalRegistrations}</span>
+              </p>
+            )}
+            <p className="flex items-center gap-1.5 text-xs"><Calendar className="size-3.5 shrink-0" />{d.weekday}, {event.time}</p>
+            <p className="flex items-center gap-1.5 text-xs"><MapPin className="size-3.5 shrink-0" /><span className="truncate">{event.location}</span></p>
+            <p className="flex items-center gap-1.5 text-xs"><Users className="size-3.5 shrink-0" />{event.attendees.length} campus peers going</p>
           </div>
         </div>
       </div>
-      <div className="mt-auto flex gap-2 border-t px-5 py-3">
-        <Button size="sm" variant="ghost" className="flex-1" asChild>
-          <Link to="/events/$id" params={{ id: event.id }}>View</Link>
+
+      <div className="mt-auto flex items-center gap-2 border-t bg-muted/10 px-4 py-2.5">
+        <Button size="sm" variant="ghost" className="h-8 text-xs flex-1" asChild>
+          <Link to="/events/$id" params={{ id: event.id }}>Details</Link>
         </Button>
+        {externalApplyUrl && (
+          <Button size="sm" variant="outline" className="h-8 text-xs gap-1 border-primary/20 hover:border-primary" asChild>
+            <a href={externalApplyUrl} target="_blank" rel="noreferrer">
+              Apply <ExternalLink className="size-3" />
+            </a>
+          </Button>
+        )}
         <Button
           size="sm"
-          variant={registered ? "outline" : "default"}
-          className="flex-1"
+          variant={registered ? "secondary" : "default"}
+          className="h-8 text-xs flex-1"
           onClick={() => toast(toggle(event.id) ? "Event registration confirmed." : "Registration cancelled.")}
         >
-          {registered ? <><Check className="size-4" /> Registered</> : "Register"}
+          {registered ? <><Check className="size-3.5 mr-1" /> Going</> : "Attend"}
         </Button>
       </div>
     </TiltCard>

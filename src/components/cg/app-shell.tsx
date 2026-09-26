@@ -1,9 +1,11 @@
 import { Link, useNavigate, useRouterState, type LinkProps } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import {
-  Bell, Bookmark, Briefcase, Calendar, Code2, FlaskConical, FolderGit2, GraduationCap, Heart, Home,
-  LogOut, Menu, MessageSquare, Search, Settings, Swords, User, UserCog, Users, UsersRound, BookOpen, Link2,
+  Bell, Bookmark, Briefcase, Calendar, ChevronDown, Code2, FlaskConical, FolderGit2, GraduationCap, Heart, Home,
+  LogOut, MapPin, Menu, MessageSquare, Search, Settings, Swords, User, UserCog, Users, UsersRound, BookOpen, Link2,
 } from "lucide-react";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { useStoreHydrated } from "@/lib/hydration";
@@ -41,6 +43,62 @@ const BOTTOM: NavItem[] = [
   { to: "/settings", label: "Settings", icon: Settings },
 ];
 
+const MY_COLLEGE = "Manipal University Jaipur";
+const OTHER_COLLEGES = [
+  "IIT Delhi",
+  "IIT Bombay",
+  "BITS Pilani",
+  "NIT Trichy",
+  "IIT Madras",
+  "VIT Vellore",
+  "Jadavpur University",
+  "IIIT Hyderabad",
+  "DTU Delhi",
+  "SRM Chennai",
+];
+
+function CollegeSwitcher() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          className="flex w-full items-center gap-2 rounded-lg border bg-card/60 px-2.5 py-2 text-left text-xs hover:bg-accent/60 transition-colors"
+          aria-label="Switch campus"
+        >
+          <MapPin className="size-3.5 shrink-0 text-brand" />
+          <span className="flex-1 truncate font-medium text-foreground">{MY_COLLEGE}</span>
+          <ChevronDown className="size-3.5 shrink-0 text-muted-foreground" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="right" align="end" className="w-64">
+        <DropdownMenuLabel className="flex items-center gap-1.5 text-[11px]">
+          <GraduationCap className="size-3.5" /> Your Campus
+        </DropdownMenuLabel>
+        <DropdownMenuItem className="gap-2 font-medium text-brand focus:text-brand">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[9px] font-bold text-brand-foreground">✓</span>
+          {MY_COLLEGE}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+          🚀 Coming soon to these communities
+        </DropdownMenuLabel>
+        {OTHER_COLLEGES.map((college) => (
+          <DropdownMenuItem
+            key={college}
+            disabled
+            className="flex items-center justify-between gap-2 opacity-60 cursor-not-allowed"
+          >
+            <span className="truncate text-xs">{college}</span>
+            <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground">
+              soon
+            </span>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 function useCounts() {
   const messages = useApp((s) => s.conversations.reduce((a, c) => a + (c.unread > 0 ? 1 : 0), 0));
   const notifications = useApp((s) => s.notifications.filter((n) => !n.read).length);
@@ -73,13 +131,17 @@ function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined 
   return (
     <div className="flex h-full flex-col">
       <div className="px-4 pt-5 pb-6">
-        <Link to="/home" onClick={onNavigate} aria-label="CampusGraph home"><Logo /></Link>
+        <Link to="/home" onClick={onNavigate} aria-label="Tribe home"><Logo /></Link>
       </div>
       <nav className="flex-1 space-y-6 overflow-y-auto px-2.5" aria-label="Main">
         <div className="space-y-0.5">{MAIN.map((i) => <NavLinkItem key={i.to} item={i} onClick={onNavigate} />)}</div>
         <div>
           <p className="mb-1.5 px-2.5 font-mono text-[10px] tracking-[0.16em] text-muted-foreground">DISCOVER</p>
           <div className="space-y-0.5">{DISCOVER.map((i) => <NavLinkItem key={i.to} item={i} onClick={onNavigate} />)}</div>
+        </div>
+        <div>
+          <p className="mb-1.5 px-2.5 font-mono text-[10px] tracking-[0.16em] text-muted-foreground">CAMPUS</p>
+          <CollegeSwitcher />
         </div>
       </nav>
       <div className="space-y-0.5 border-t px-2.5 py-3">{BOTTOM.map((i) => <NavLinkItem key={i.to} item={i} onClick={onNavigate} />)}</div>
@@ -120,9 +182,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const path = useRouterState({ select: (s) => s.location.pathname });
 
+  const isPublicRoute = path.startsWith("/events") || path.startsWith("/projects") || path.startsWith("/people");
+
   useEffect(() => {
-    if (hydrated && !loggedIn) navigate({ to: "/login" });
-  }, [hydrated, loggedIn, navigate]);
+    if (hydrated && !loggedIn && !isPublicRoute) navigate({ to: "/login" });
+  }, [hydrated, loggedIn, navigate, isPublicRoute]);
 
   const mobileNav: NavItem[] = [MAIN[0], MAIN[1], MAIN[2], MAIN[5], BOTTOM[0]];
 
@@ -149,33 +213,46 @@ export function AppShell({ children }: { children: ReactNode }) {
             <kbd className="hidden rounded border bg-muted px-1.5 font-mono text-[10px] sm:inline">⌘K</kbd>
           </button>
           <div className="ml-auto flex items-center gap-1">
-            <Button variant="ghost" size="icon" className="relative size-9" asChild>
-              <Link to="/notifications" aria-label={`Notifications, ${counts.notifications} unread`}>
-                <Bell className="size-[18px]" />
-                {hydrated && counts.notifications > 0 && (
-                  <span className="absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[10px] font-medium text-brand-foreground">
-                    {counts.notifications > 9 ? "9+" : counts.notifications}
-                  </span>
-                )}
-              </Link>
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger className="rounded-full" aria-label="Profile menu">
-                <UserAvatar name={me.name} hue={me.hue} size={32} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>
-                  <p className="font-medium">{me.name}</p>
-                  <p className="truncate text-xs font-normal text-muted-foreground">{me.college}</p>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => navigate({ to: "/profile" })}><User className="size-4" /> View profile</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => navigate({ to: "/profile/edit" })}><UserCog className="size-4" /> Edit profile</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => navigate({ to: "/settings" })}><Settings className="size-4" /> Settings</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => { logout(); navigate({ to: "/login" }); }}><LogOut className="size-4" /> Sign out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {loggedIn ? (
+              <>
+                <Button variant="ghost" size="icon" className="relative size-9" asChild>
+                  <Link to="/notifications" aria-label={`Notifications, ${counts.notifications} unread`}>
+                    <Bell className="size-[18px]" />
+                    {hydrated && counts.notifications > 0 && (
+                      <span className="absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[10px] font-medium text-brand-foreground">
+                        {counts.notifications > 9 ? "9+" : counts.notifications}
+                      </span>
+                    )}
+                  </Link>
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="rounded-full" aria-label="Profile menu">
+                    <UserAvatar name={me.name} hue={me.hue} size={32} />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>
+                      <p className="font-medium">{me.name}</p>
+                      <p className="truncate text-xs font-normal text-muted-foreground">{me.college}</p>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={() => navigate({ to: "/profile" })}><User className="size-4" /> View profile</DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => navigate({ to: "/profile/edit" })}><UserCog className="size-4" /> Edit profile</DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => navigate({ to: "/settings" })}><Settings className="size-4" /> Settings</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={async () => { try { await signOut(auth); } finally { navigate({ to: "/login" }); } }}><LogOut className="size-4" /> Sign out</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="ghost" asChild>
+                  <Link to="/login">Sign in</Link>
+                </Button>
+                <Button size="sm" asChild>
+                  <Link to="/signup">Join Tribe</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </header>
 

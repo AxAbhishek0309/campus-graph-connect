@@ -13,9 +13,9 @@ import { TeamFormDialog } from "@/components/cg/team-form";
 export const Route = createFileRoute("/_shell/teams/$id")({
   head: () => ({
     meta: [
-      { title: "Team — CampusGraph" },
+      { title: "Team — Tribe" },
       { name: "description", content: "Team members, open roles, skills and recent activity." },
-      { property: "og:title", content: "Team — CampusGraph" },
+      { property: "og:title", content: "Team — Tribe" },
       { property: "og:description", content: "See who's on the team and what they need." },
     ],
   }),

@@ -13,9 +13,9 @@ import { UserAvatar, Verified } from "@/components/cg/primitives";
 export const Route = createFileRoute("/_shell/settings/account")({
   head: () => ({
     meta: [
-      { title: "Account settings — CampusGraph" },
+      { title: "Account settings — Tribe" },
       { name: "description", content: "Change your email, password and profile basics." },
-      { property: "og:title", content: "Account settings — CampusGraph" },
+      { property: "og:title", content: "Account settings — Tribe" },
       { property: "og:description", content: "Manage your account." },
     ],
   }),

@@ -47,7 +47,7 @@ export function reasonToConnect(me: Student, s: Student): string {
   if (s.mentor) return `${p} mentors juniors in ${s.skills[0] ?? "their field"}.`;
   if (s.college === me.college) return `${p} ${isAre} on your campus, ${s.branch}.`;
   if (sharedInterests.length) return `You're both into ${sharedInterests[0]}.`;
-  if (s.activity === "new") return `${p} just joined CampusGraph — say hi.`;
+  if (s.activity === "new") return `${p} just joined Tribe — say hi.`;
   return `${p} ${isAre} looking for a ${s.lookingFor[0]?.toLowerCase() ?? "collaborator"}.`;
 }
 

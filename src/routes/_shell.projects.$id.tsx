@@ -12,9 +12,9 @@ import { ProjectFormDialog } from "@/components/cg/project-form";
 export const Route = createFileRoute("/_shell/projects/$id")({
   head: () => ({
     meta: [
-      { title: "Project — CampusGraph" },
+      { title: "Project — Tribe" },
       { name: "description", content: "Project overview, team, tech stack, timeline and open roles." },
-      { property: "og:title", content: "Project — CampusGraph" },
+      { property: "og:title", content: "Project — Tribe" },
       { property: "og:description", content: "See who's building it and which roles are open." },
     ],
   }),

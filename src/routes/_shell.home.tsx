@@ -11,9 +11,9 @@ import { HrefLink, Tag, UserAvatar, Verified } from "@/components/cg/primitives"
 export const Route = createFileRoute("/_shell/home")({
   head: () => ({
     meta: [
-      { title: "Home — CampusGraph" },
-      { name: "description", content: "Your personalised CampusGraph dashboard: people to meet, projects and events." },
-      { property: "og:title", content: "Home — CampusGraph" },
+      { title: "Home — Tribe" },
+      { name: "description", content: "Your personalised Tribe dashboard: people to meet, projects and events." },
+      { property: "og:title", content: "Home — Tribe" },
       { property: "og:description", content: "People you should meet this week." },
     ],
   }),

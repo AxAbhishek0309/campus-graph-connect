@@ -14,10 +14,10 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 export const Route = createFileRoute("/verify-college")({
   head: () => ({
     meta: [
-      { title: "Verify your college — CampusGraph" },
+      { title: "Verify your college — Tribe" },
       { name: "description", content: "Verify your college email to join your campus network." },
-      { property: "og:title", content: "Verify your college — CampusGraph" },
-      { property: "og:description", content: "Only verified students can join CampusGraph." },
+      { property: "og:title", content: "Verify your college — Tribe" },
+      { property: "og:description", content: "Only verified students can join Tribe." },
     ],
   }),
   component: Verify,

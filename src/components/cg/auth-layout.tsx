@@ -6,7 +6,7 @@ export function AuthLayout({ children, aside }: { children: ReactNode; aside?: R
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       <div className="flex flex-col px-6 py-8 sm:px-12">
-        <Link to="/" aria-label="CampusGraph home"><Logo /></Link>
+        <Link to="/" aria-label="Tribe home"><Logo /></Link>
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-12 animate-rise">{children}</div>
       </div>
       <div className="hidden border-l bg-card lg:flex lg:items-center lg:justify-center lg:p-12">

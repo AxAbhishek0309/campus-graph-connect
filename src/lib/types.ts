@@ -37,10 +37,33 @@ export interface Student {
   github?: string;
   leetcode?: string;
   linkedin?: string;
+  codeforces?: string;
+  codechef?: string;
+  kaggle?: string;
   repos: number;
   lcSolved: number;
   cfRating: number;
-  contributions: number[]; // 52 weeks
+  ccRating?: number;
+  ccStars?: string;
+  kaggleTier?: string;
+  lcEasySolved?: number;
+  lcMediumSolved?: number;
+  lcHardSolved?: number;
+  lcRanking?: number;
+  cfRank?: string;
+  cfMaxRating?: number;
+  ccGlobalRank?: number;
+  kaggleNotebooks?: number;
+  avatarUrl?: string;
+  githubAvatar?: string;
+  leetcodeAvatar?: string;
+  codeforcesAvatar?: string;
+  contributions: number[]; // 52 weeks GitHub
+  githubDaily?: number[]; // 364 days actual daily counts
+  leetcodeContributions?: number[]; // 52 weeks LeetCode
+  leetcodeDaily?: number[]; // 364 days actual daily counts
+  codeforcesContributions?: number[]; // 52 weeks Codeforces
+  codeforcesDaily?: number[]; // 364 days actual daily counts
   experience: Experience[];
   mentor?: boolean;
 }
@@ -79,10 +102,21 @@ export interface Team {
   activity: { text: string; when: string }[];
 }
 
+export type EventPlatform =
+  | "Unstop"
+  | "Grad Partners"
+  | "Wellfound"
+  | "Naukri Campus"
+  | "Indeed"
+  | "Devfolio"
+  | "HackerEarth"
+  | "Campus"
+  | "Other";
+
 export interface EventItem {
   id: string;
   title: string;
-  category: "Hackathons" | "Workshops" | "Meetups" | "Competitions" | "Seminars" | "Networking" | "Study";
+  category: "Hackathons" | "Workshops" | "Meetups" | "Competitions" | "Seminars" | "Networking" | "Study" | "Hiring Challenges";
   organizer: string;
   date: string; // ISO date
   time: string;
@@ -93,6 +127,18 @@ export interface EventItem {
   capacity: number;
   relatedProjects: string[];
   hue: number;
+  prize?: string;
+  link?: string;
+  mode?: "Online" | "In-person" | "Hybrid";
+  sourcePlatform?: EventPlatform;
+  sourceUrl?: string;
+  eligibility?: string;
+  deadline?: string;
+  tags?: string[];
+  isFlagship?: boolean;
+  isAiFetched?: boolean;
+  registeredCount?: string | number;
+  externalRegistrations?: string | number;
 }
 
 export interface Message {
@@ -134,8 +180,33 @@ export type ConnectionState = "connected" | "sent" | "received";
 
 export type Platform = "GitHub" | "LeetCode" | "Codeforces" | "CodeChef" | "Kaggle" | "LinkedIn";
 
+export interface IntegrationStats {
+  primary: string;
+  secondary?: string;
+  badge?: string;
+  avatarUrl?: string;
+  easySolved?: number;
+  mediumSolved?: number;
+  hardSolved?: number;
+  ranking?: string | number;
+  acceptanceRate?: string | number;
+  rating?: number;
+  maxRating?: number;
+  rank?: string;
+  globalRank?: number | string;
+  stars?: string;
+  notebooks?: number;
+  medals?: number;
+  followers?: number;
+  repos?: number;
+  contributions?: number[]; // 52 weeks heatmap values
+  dailyContributions?: number[]; // 364 days exact daily heatmap values
+}
+
 export interface Integration {
   status: "disconnected" | "connected" | "syncing";
   handle?: string;
   lastSync?: number;
+  stats?: IntegrationStats;
 }
+

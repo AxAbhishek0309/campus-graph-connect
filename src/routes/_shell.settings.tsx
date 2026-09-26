@@ -4,10 +4,10 @@ import { PageHeader } from "@/components/cg/primitives";
 export const Route = createFileRoute("/_shell/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — CampusGraph" },
+      { title: "Settings — Tribe" },
       { name: "description", content: "Account, privacy, notification and integration settings." },
-      { property: "og:title", content: "Settings — CampusGraph" },
-      { property: "og:description", content: "Manage your CampusGraph account." },
+      { property: "og:title", content: "Settings — Tribe" },
+      { property: "og:description", content: "Manage your Tribe account." },
     ],
   }),
   component: SettingsLayout,

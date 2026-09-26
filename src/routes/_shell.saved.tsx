@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_shell/saved")({
   head: () => ({
     meta: [
-      { title: "Saved — CampusGraph" },
+      { title: "Saved — Tribe" },
       { name: "description", content: "People, projects, teams and events you've saved." },
-      { property: "og:title", content: "Saved — CampusGraph" },
+      { property: "og:title", content: "Saved — Tribe" },
       { property: "og:description", content: "Everything you bookmarked in one place." },
     ],
   }),

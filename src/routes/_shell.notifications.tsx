@@ -12,9 +12,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_shell/notifications")({
   head: () => ({
     meta: [
-      { title: "Notifications — CampusGraph" },
+      { title: "Notifications — Tribe" },
       { name: "description", content: "Connection requests, messages, project and event updates." },
-      { property: "og:title", content: "Notifications — CampusGraph" },
+      { property: "og:title", content: "Notifications — Tribe" },
       { property: "og:description", content: "Stay on top of your network." },
     ],
   }),

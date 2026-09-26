@@ -7,9 +7,9 @@ export const Route = createFileRoute("/_shell/people/")({
   validateSearch: (s) => z.object({ q: z.string().optional(), cat: z.string().optional() }).parse(s),
   head: () => ({
     meta: [
-      { title: "People — CampusGraph" },
+      { title: "People — Tribe" },
       { name: "description", content: "Find students by skill, college, interest and what they're looking for." },
-      { property: "og:title", content: "Find your people — CampusGraph" },
+      { property: "og:title", content: "Find your people — Tribe" },
       { property: "og:description", content: "Search students across campuses by skill, interest and goals." },
     ],
   }),

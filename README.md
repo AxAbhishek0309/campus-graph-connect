@@ -1,4 +1,4 @@
-# Campus Graph Connect
+# Tribe Connect
 
 Build a complete, production-quality web application called CAMPUSGRAPH as detailed in the attached specification.
 

@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/_shell/people/$id")({
   head: () => ({
     meta: [
-      { title: "Student profile — CampusGraph" },
+      { title: "Student profile — Tribe" },
       { name: "description", content: "Skills, projects, coding activity and what this student is looking for." },
-      { property: "og:title", content: "Student profile — CampusGraph" },
+      { property: "og:title", content: "Student profile — Tribe" },
       { property: "og:description", content: "See skills, projects and shared interests." },
     ],
   }),
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_shell/people/$id")({
 function PersonPage() {
   const { id } = Route.useParams();
   const person = useApp((s) => s.students.find((x) => x.id === id));
-  if (!person) return <EmptyState title="Profile not found" description="This student may have left CampusGraph." action={<Button asChild><Link to="/people">Browse people</Link></Button>} />;
+  if (!person) return <EmptyState title="Profile not found" description="This student may have left Tribe." action={<Button asChild><Link to="/people">Browse people</Link></Button>} />;
   return (
     <>
       <Link to="/people" className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" /> People</Link>

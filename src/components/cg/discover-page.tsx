@@ -20,9 +20,9 @@ export function DiscoverPage({ category, title, description, eyebrow, cta }: { c
 export function discoverHead(title: string, description: string) {
   return () => ({
     meta: [
-      { title: `${title} — CampusGraph` },
+      { title: `${title} — Tribe` },
       { name: "description", content: description },
-      { property: "og:title", content: `${title} — CampusGraph` },
+      { property: "og:title", content: `${title} — Tribe` },
       { property: "og:description", content: description },
     ],
   });

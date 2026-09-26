@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_shell/messages")({
   head: () => ({
     meta: [
-      { title: "Messages — CampusGraph" },
-      { name: "description", content: "Your conversations with students on CampusGraph." },
-      { property: "og:title", content: "Messages — CampusGraph" },
+      { title: "Messages — Tribe" },
+      { name: "description", content: "Your conversations with students on Tribe." },
+      { property: "og:title", content: "Messages — Tribe" },
       { property: "og:description", content: "Chat with collaborators and teammates." },
     ],
   }),

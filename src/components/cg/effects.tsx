@@ -3,7 +3,7 @@ import { useRef, type ReactNode, type MouseEvent } from "react";
 import { cn } from "@/lib/utils";
 
 /** Aceternity-style 3D tilt card with a cursor-following spotlight glare. */
-export function TiltCard({ children, className, intensity = 10 }: { children: ReactNode; className?: string; intensity?: number }) {
+export function TiltCard({ children, className, intensity = 10, style }: { children: ReactNode; className?: string; intensity?: number; style?: React.CSSProperties }) {
   const ref = useRef<HTMLElement>(null);
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
@@ -29,7 +29,7 @@ export function TiltCard({ children, className, intensity = 10 }: { children: Re
         ref={ref}
         onMouseMove={onMove}
         onMouseLeave={reset}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d", ...style }}
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
         className={cn("group relative h-full transition-shadow hover:shadow-elevated", className)}

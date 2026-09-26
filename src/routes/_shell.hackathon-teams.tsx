@@ -12,9 +12,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_shell/hackathon-teams")({
   head: () => ({
     meta: [
-      { title: "Hackathon team builder — CampusGraph" },
+      { title: "Hackathon team builder — Tribe" },
       { name: "description", content: "Pick a hackathon and the roles you need. Get a balanced team of students who fill the gaps." },
-      { property: "og:title", content: "Build your hackathon team — CampusGraph" },
+      { property: "og:title", content: "Build your hackathon team — Tribe" },
       { property: "og:description", content: "Frontend, backend, ML, design, pitching — find the missing pieces." },
     ],
   }),

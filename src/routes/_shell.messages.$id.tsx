@@ -15,7 +15,6 @@ export const Route = createFileRoute("/_shell/messages/$id")({
 
 const EMOJIS = ["😀", "😂", "🙌", "👍", "🔥", "❤️", "🎉", "🤔", "😅", "🚀", "👀", "✅"];
 const REACTIONS = ["👍", "❤️", "😂", "🔥"];
-const REPLIES = ["Sounds good!", "Haha yes, totally.", "Let me check and get back to you.", "Sure, send it over.", "That works for me 👍", "Nice, I'm in."];
 
 function Conversation() {
   const { id } = Route.useParams();
@@ -42,13 +41,6 @@ function Conversation() {
     setText("");
     setAttachment(null);
     toast("Message sent.", { duration: 1200 });
-    if (person.activity !== "new") {
-      setTimeout(() => setTyping(true), 800);
-      setTimeout(() => {
-        setTyping(false);
-        useApp.getState().receiveMessage(id, REPLIES[(conv.messages.length + t.length) % REPLIES.length]);
-      }, 2600);
-    }
   };
 
   let lastDay = "";

@@ -6,9 +6,9 @@ import { SettingsSection, ToggleRow } from "@/components/cg/settings-ui";
 export const Route = createFileRoute("/_shell/settings/notifications")({
   head: () => ({
     meta: [
-      { title: "Notification settings — CampusGraph" },
+      { title: "Notification settings — Tribe" },
       { name: "description", content: "Choose which updates you want to hear about." },
-      { property: "og:title", content: "Notification settings — CampusGraph" },
+      { property: "og:title", content: "Notification settings — Tribe" },
       { property: "og:description", content: "Pick your notifications." },
     ],
   }),

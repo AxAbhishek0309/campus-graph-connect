@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowRight, BadgeCheck, Bookmark, Calendar, Check, GitBranch, MapPin, MessageSquare, Search, UserPlus, Users } from "lucide-react";
 import { useApp } from "@/lib/store";
+import { makeStudents, makeProjects, makeTeams, makeEvents } from "@/lib/data";
+import type { Student } from "@/lib/types";
 import { reasonToConnect, yearLabel } from "@/lib/helpers";
 import { Button } from "@/components/ui/button";
 import { Logo, Tag, UserAvatar } from "@/components/cg/primitives";
@@ -11,9 +13,9 @@ import { HeroBackdrop, Magnetic, TiltCard } from "@/components/cg/effects";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CampusGraph — Your college is full of people you should know" },
+      { title: "Tribe — Your college is full of people you should know" },
       { name: "description", content: "Find coding partners, hackathon teammates, research partners and mentors at your university. Build projects and join campus events together." },
-      { property: "og:title", content: "CampusGraph — Find your people on campus" },
+      { property: "og:title", content: "Tribe — Find your people on campus" },
       { property: "og:description", content: "Discover the right students for coding, projects, research, hackathons and placements." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -30,10 +32,12 @@ function ProductPreview() {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("For You");
   const [pending, setPending] = useState<string[]>([]);
+  const fallback = useMemo(() => makeStudents(), []);
+  const pool = students && students.length >= 6 ? students : fallback;
   const list = useMemo(() => {
     const t = q.toLowerCase();
-    return students
-      .filter((s) => s.bio && s.skills.length >= 3)
+    return pool
+      .filter((s) => s && s.bio && s.skills.length >= 2)
       .filter((s) => !t || s.name.toLowerCase().includes(t) || s.skills.some((k) => k.toLowerCase().includes(t)))
       .filter((s) =>
         cat === "For You" ? true :
@@ -43,7 +47,7 @@ function ProductPreview() {
         !!s.mentor,
       )
       .slice(0, 6);
-  }, [students, q, cat]);
+  }, [pool, q, cat]);
 
   return (
     <div className="overflow-hidden rounded-2xl border bg-card shadow-window">
@@ -51,7 +55,7 @@ function ProductPreview() {
         <span className="size-2.5 rounded-full bg-border" />
         <span className="size-2.5 rounded-full bg-border" />
         <span className="size-2.5 rounded-full bg-border" />
-        <span className="mx-auto rounded-md border bg-card px-3 py-0.5 font-mono text-[11px] text-muted-foreground">campusgraph.app/people</span>
+        <span className="mx-auto rounded-md border bg-card px-3 py-0.5 font-mono text-[11px] text-muted-foreground">tribe.app/people</span>
       </div>
       <div className="flex">
         <div className="hidden w-44 shrink-0 border-r p-4 md:block">
@@ -121,15 +125,18 @@ function Section({ n, title, text, children, flip }: { n: string; title: string;
 
 function Landing() {
   const s = useApp();
-  const people = s.students.filter((x) => x.bio && x.skills.length >= 3);
-  const projects = s.projects.slice(1, 4);
-  const events = s.events.slice(2, 5);
-  const team = s.teams[0];
+  const fallback = useMemo(() => makeStudents(), []);
+  const pool = s.students && s.students.length >= 8 ? s.students : fallback;
+  const people = pool.filter((x) => x && x.name);
+  const projects = s.projects && s.projects.length >= 3 ? s.projects.slice(0, 3) : makeProjects(pool).slice(0, 3);
+  const events = s.events && s.events.length >= 3 ? s.events.slice(0, 3) : makeEvents(pool, projects).slice(0, 3);
+  const team = (s.teams && s.teams[0]) || makeTeams(pool, projects)[0] || { name: "Null Pointers", purpose: "Smart India Hackathon" };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-30 border-b border-transparent bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <Link to="/" aria-label="CampusGraph"><Logo /></Link>
+          <Link to="/" aria-label="Tribe"><Logo /></Link>
           <nav className="flex items-center gap-1">
             <Button variant="ghost" size="sm" asChild><Link to="/login">Sign in</Link></Button>
             <Button size="sm" asChild><Link to="/signup">Get Started</Link></Button>
@@ -144,7 +151,7 @@ function Landing() {
             Find your people<br />to build, learn<br /><span className="text-muted-foreground">and grow together.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl animate-rise text-lg text-muted-foreground [animation-delay:160ms]">
-            CampusGraph helps students discover the right people for coding, projects, research, hackathons, placements and meaningful conversations.
+            Tribe helps students discover the right people for coding, projects, research, hackathons, placements and meaningful conversations.
           </p>
           <div className="mt-8 flex animate-rise justify-center gap-3 [animation-delay:240ms]">
             <Magnetic><Button size="lg" asChild><Link to="/signup">Get Started <ArrowRight className="size-4" /></Link></Button></Magnetic>
@@ -157,7 +164,7 @@ function Landing() {
         <div className="mt-24">
           <Section n="01" title="Discover people" text="Not a feed of strangers. Every recommendation comes with a plain reason — shared skills, shared goals, same campus — so you know why you should say hi.">
             <div className="divide-y rounded-xl border bg-card">
-              {people.slice(6, 10).map((p) => (
+              {people.slice(0, 4).map((p) => (
                 <div key={p.id} className="flex items-center gap-4 p-4">
                   <UserAvatar name={p.name} hue={p.hue} size={40} />
                   <div className="min-w-0 flex-1">
@@ -191,13 +198,14 @@ function Landing() {
               </div>
               <div className="mt-4 space-y-2">
                 {["Frontend", "Backend", "ML", "Pitching"].map((role, i) => {
-                  const p = people[i * 3 + 1];
+                  const p = people[i % people.length] || fallback[i % fallback.length];
+                  if (!p) return null;
                   return (
                     <div key={role} className="flex items-center gap-3 rounded-lg bg-muted/60 p-3">
                       <span className="w-20 font-mono text-[11px] text-muted-foreground uppercase">{role}</span>
                       <UserAvatar name={p.name} hue={p.hue} size={28} />
                       <span className="flex-1 truncate text-sm">{p.name}</span>
-                      <span className="hidden text-xs text-muted-foreground sm:inline">{p.skills[0]}, {p.skills[1]}</span>
+                      <span className="hidden text-xs text-muted-foreground sm:inline">{p.skills?.[0] || "Code"}, {p.skills?.[1] || "Design"}</span>
                     </div>
                   );
                 })}
@@ -205,21 +213,42 @@ function Landing() {
             </div>
           </Section>
 
-          <Section flip n="04" title="Join campus events" text="Hackathons, workshops, meetups and study sessions from every club, in one calendar. See who's going before you go.">
+          <Section flip n="04" title="Flagship competitions & hackathons" text="Real-time events curated from Unstop, Grad Partners, Wellfound, Naukri Campus, Indeed, and Devfolio with verified eligibility, cash awards, and direct application portals.">
             <div className="divide-y rounded-xl border bg-card">
               {events.map((e) => (
-                <div key={e.id} className="flex items-center gap-4 p-4">
-                  <div className="flex w-12 flex-col items-center rounded-md border py-1">
-                    <span className="font-mono text-[9px] text-muted-foreground">{new Date(e.date).toLocaleDateString("en-US", { month: "short" }).toUpperCase()}</span>
-                    <span className="font-semibold">{new Date(e.date).getUTCDate()}</span>
+                <div key={e.id} className="flex items-center gap-4 p-4 hover:bg-muted/30 transition-colors">
+                  <div className="flex w-12 flex-col items-center rounded-md border py-1 bg-muted/20">
+                    <span className="font-mono text-[9px] font-semibold text-muted-foreground">{new Date(e.date).toLocaleDateString("en-US", { month: "short" }).toUpperCase()}</span>
+                    <span className="font-semibold text-base">{new Date(e.date).getUTCDate()}</span>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{e.title}</p>
-                    <p className="flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="size-3" />{e.location}</p>
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      {e.sourcePlatform && e.sourcePlatform !== "Campus" && (
+                        <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-primary/10 text-primary">
+                          via {e.sourcePlatform}
+                        </span>
+                      )}
+                      {e.prize && (
+                        <span className="text-[10px] font-medium text-amber-600 dark:text-amber-400 truncate">
+                          🏆 {e.prize}
+                        </span>
+                      )}
+                    </div>
+                    <Link to="/events/$id" params={{ id: e.id }} className="truncate text-sm font-semibold hover:underline block">
+                      {e.title}
+                    </Link>
+                    <p className="flex items-center gap-1 text-xs text-muted-foreground truncate"><MapPin className="size-3 shrink-0" />{e.location}</p>
                   </div>
-                  <span className="flex items-center gap-1 text-xs text-muted-foreground"><Users className="size-3" />{e.attendees.length}</span>
+                  <Button size="sm" variant="outline" asChild className="shrink-0 text-xs h-7">
+                    <Link to="/events/$id" params={{ id: e.id }}>Details</Link>
+                  </Button>
                 </div>
               ))}
+              <div className="p-3 text-center bg-muted/10">
+                <Button size="sm" variant="ghost" asChild className="text-xs font-semibold gap-1 text-primary">
+                  <Link to="/events">Explore all competitions & platforms →</Link>
+                </Button>
+              </div>
             </div>
           </Section>
 
@@ -251,12 +280,13 @@ function Landing() {
           <Section n="07" title="Campus activity" text="A quiet pulse of what's happening around you — who joined which team, which projects shipped, what's on this week.">
             <ul className="space-y-4 rounded-xl border bg-card p-5">
               {[
-                [people[0], "joined Null Pointers for Smart India Hackathon", Users],
-                [people[3], "shipped v2 of CropScan", GitBranch],
-                [people[5], "registered for HackJaipur 2026", Calendar],
-                [people[8], "saved your project CourseLens", Bookmark],
+                [people[0] || fallback[0], "joined Null Pointers for Smart India Hackathon", Users],
+                [people[1] || fallback[1], "shipped v2 of CropScan", GitBranch],
+                [people[2] || fallback[2], "registered for HackJaipur 2026", Calendar],
+                [people[3] || fallback[3], "saved your project CourseLens", Bookmark],
               ].map(([p, t, Icon], i) => {
-                const person = p as (typeof people)[number];
+                const person = p as Student;
+                if (!person) return null;
                 const I = Icon as typeof Users;
                 return (
                   <li key={i} className="flex items-center gap-3 text-sm">
@@ -279,7 +309,7 @@ function Landing() {
       <footer className="border-t">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-8 text-sm text-muted-foreground sm:flex-row">
           <Logo />
-          <p>Made for students, by students. © 2026 CampusGraph</p>
+          <p>Made for students, by students. © 2026 Tribe</p>
         </div>
       </footer>
     </div>

@@ -17,9 +17,9 @@ import { Chip, PageHeader, UserAvatar } from "@/components/cg/primitives";
 export const Route = createFileRoute("/_shell/profile/edit")({
   head: () => ({
     meta: [
-      { title: "Edit profile — CampusGraph" },
+      { title: "Edit profile — Tribe" },
       { name: "description", content: "Update your skills, interests, links and privacy." },
-      { property: "og:title", content: "Edit profile — CampusGraph" },
+      { property: "og:title", content: "Edit profile — Tribe" },
       { property: "og:description", content: "Keep your student profile up to date." },
     ],
   }),
@@ -32,6 +32,9 @@ const schema = z.object({
   github: z.string().max(60).regex(/^[A-Za-z0-9-]*$/, "Only letters, numbers and dashes").optional().or(z.literal("")),
   linkedin: z.string().max(80).optional().or(z.literal("")),
   leetcode: z.string().max(60).optional().or(z.literal("")),
+  codeforces: z.string().max(60).optional().or(z.literal("")),
+  codechef: z.string().max(60).optional().or(z.literal("")),
+  kaggle: z.string().max(60).optional().or(z.literal("")),
 });
 
 function toggle<T>(a: T[], v: T) { return a.includes(v) ? a.filter((x) => x !== v) : [...a, v]; }
@@ -59,7 +62,16 @@ function EditProfile() {
   useBlocker({ shouldBlockFn: () => dirty && !saving && !window.confirm("You have unsaved changes. Leave anyway?"), enableBeforeUnload: dirty });
 
   const save = () => {
-    const r = schema.safeParse({ name: d.name, bio: d.bio, github: d.github ?? "", linkedin: d.linkedin ?? "", leetcode: d.leetcode ?? "" });
+    const r = schema.safeParse({
+      name: d.name,
+      bio: d.bio,
+      github: d.github ?? "",
+      linkedin: d.linkedin ?? "",
+      leetcode: d.leetcode ?? "",
+      codeforces: d.codeforces ?? "",
+      codechef: d.codechef ?? "",
+      kaggle: d.kaggle ?? "",
+    });
     if (!r.success) {
       setErrors(Object.fromEntries(r.error.issues.map((i) => [i.path[0], i.message])));
       toast.error("Please fix the highlighted fields.");
@@ -76,7 +88,7 @@ function EditProfile() {
 
   return (
     <div className="pb-24">
-      <PageHeader title="Edit profile" description="Changes appear everywhere on CampusGraph as soon as you save." actions={<><Button variant="ghost" asChild><Link to="/profile">Cancel</Link></Button><Button onClick={save} disabled={!dirty || saving}>{saving ? "Saving…" : "Save changes"}</Button></>} />
+      <PageHeader title="Edit profile" description="Changes appear everywhere on Tribe as soon as you save." actions={<><Button variant="ghost" asChild><Link to="/profile">Cancel</Link></Button><Button onClick={save} disabled={!dirty || saving}>{saving ? "Saving…" : "Save changes"}</Button></>} />
 
       <Block title="Basic information">
         <div className="flex items-center gap-4">
@@ -127,14 +139,30 @@ function EditProfile() {
         <Button variant="outline" size="sm" onClick={() => setD({ ...d, experience: [...d.experience, { title: "", org: "", period: "" }] })}><Plus className="size-4" /> Add experience</Button>
       </Block>
 
-      <Block title="Social links">
-        {(["github", "linkedin", "leetcode"] as const).map((k) => (
+      <Block title="Coding & social profiles" desc="Connected accounts verify your DSA, competitive programming, and open-source work.">
+        {([
+          ["github", "GitHub username", "abhishek-tiwari"],
+          ["leetcode", "LeetCode username", "abhishek_t"],
+          ["codeforces", "Codeforces handle", "abhishek_coder"],
+          ["codechef", "CodeChef handle", "abhishek_t"],
+          ["kaggle", "Kaggle username", "abhishek_tiwari"],
+          ["linkedin", "LinkedIn username", "abhishek-tiwari"],
+        ] as const).map(([k, label, ph]) => (
           <div key={k} className="space-y-1.5">
-            <Label htmlFor={k} className="capitalize">{k === "github" ? "GitHub username" : k === "linkedin" ? "LinkedIn handle" : "LeetCode username"}</Label>
-            <Input id={k} value={d[k] ?? ""} onChange={(e) => setD({ ...d, [k]: e.target.value })} aria-invalid={!!errors[k]} />
+            <Label htmlFor={k}>{label}</Label>
+            <Input
+              id={k}
+              placeholder={ph}
+              value={d[k as keyof Student] as string ?? ""}
+              onChange={(e) => setD({ ...d, [k]: e.target.value })}
+              aria-invalid={!!errors[k]}
+            />
             {errors[k] && <p className="text-xs text-destructive">{errors[k]}</p>}
           </div>
         ))}
+        <p className="text-xs text-muted-foreground">
+          You can also manage and sync live stats from <Link to="/settings/integrations" className="underline hover:text-foreground">Settings → Integrations</Link>.
+        </p>
       </Block>
 
       <Block title="Privacy" desc="Saved instantly.">
